@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+SNAPRM=$(sudo timeshift --list|egrep  '^0'|cut -d\  -f7)
+
+# Gerando Snapshot
+sudo timeshift --create &&\
+	# Deletando o Snapshot mais antigo
+	sudo timeshift --delete --snapshot $SNAPRM 
