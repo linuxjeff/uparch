@@ -1,9 +1,37 @@
 #!/usr/bin/env bash
+#
+# uparch - Back e atualização do sistema
+#
+# Site:       n/a
+# Autor:      Jefferson Santana
+# Manutenção: Jefferson Santana
+#
+# ------------------------------------------------------------------------ #
+#  Faz uma copia do sitema com o Timeshift e depois atualiza o sistema com
+#  o YAY
+#
+#  Exemplos:
+#      $ uparch
+#      Neste exemplo o script faz o backup e atualiza o sistema.
+# ------------------------------------------------------------------------ #
+# Histórico:
+#
+#   v0.0.1 24/04/2020, jefferson:
+#       - Início do programa
+# ------------------------------------------------------------------------ #
+# Testado em:
+#   bash 5.0.16
+# ------------------------------------------------------------------------ #
+# Agradecimentos:
+# ------------------------------------------------------------------------ #
 
+# Variaveis
 SNAPRM=$(sudo timeshift --list|egrep  '^0'|cut -d\  -f7)
-SNAPONE=
+SNAPONE=$(sudo timeshift --list|egrep  '^1' |cut -c1)
 
+# Deletando o Snapshot mais antigo
+  [ "$SNAPONE" != "1" ] || sudo timeshift --delete --snapshot $SNAPRM
 # Gerando Snapshot
-  sudo timeshift --delete --snapshot $SNAPRM
-	# Deletando o Snapshot mais antigo
-          sudo timeshift --create &&\
+  sudo timeshift --create &&\
+	 # Atualizar o Arch Linux com YAY
+           yay 
